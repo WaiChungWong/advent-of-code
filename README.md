@@ -1,13 +1,25 @@
 <div align="center">
-  <span style="font-size: 80px">🎄</span>
-  <h1>❄️ My Advent of Code Journal ❄️</h1>
-  <p style="max-width: 500px"><i>
+  <pre>
+★
+*
+******
+***********
+*****************
+******
+**********
+***************
+*********************
+****************************
+******
+******
+  </pre>
+  <h1>My Advent of Code Journal</h1>
+  <p><i>
   “<a href="https://adventofcode.com">Advent of Code</a> is an advent calendar of small programming puzzles for a variety of skill sets and skill levels that can be solved in any programming language you like. People use them as a speed contest, interview prep, company training, university coursework, practice problems, or to challenge each other.”
   </i></p>
   <br/>
   <img align="center" src="https://img.shields.io/badge/node.js-≥_v16.13.1-green.svg?style=for-the-badge" />
 </div>
-<br/>
 
 # Usage
 
