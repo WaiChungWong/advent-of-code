@@ -1,9 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("input", "utf8")
-    .split(/\r?\n/g)
-    .filter(v => v);
+  const data = readFileSync("input.txt", "utf8").split(/\r?\n/g);
 
   const solution = findSolution(data);
 
@@ -13,24 +11,24 @@ try {
 }
 
 function findSolution(data) {
-  const connections = {};
+  const connections = new Map();
 
   for (let index = 0; index < data.length; index++) {
     const [from, to] = data[index].split("-");
 
     if (from !== "end") {
-      connections[from] = connections[from] || [];
+      connections.set(from, connections.get(from) || []);
 
       if (to !== "start") {
-        connections[from].push(to);
+        connections.get(from).push(to);
       }
     }
 
     if (to !== "end") {
-      connections[to] = connections[to] || [];
+      connections.set(to, connections.get(to) || []);
 
       if (from !== "start") {
-        connections[to].push(from);
+        connections.get(to).push(from);
       }
     }
   }
@@ -41,7 +39,7 @@ function findSolution(data) {
   while (paths.length > 0) {
     const path = paths.pop();
 
-    const caves = connections[path[path.length - 1]];
+    const caves = connections.get(path[path.length - 1]);
 
     for (let i = 0; i < caves.length; i++) {
       const cave = caves[i];

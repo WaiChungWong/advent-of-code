@@ -1,9 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("input", "utf8")
-    .split(/\r?\n/g)
-    .filter(v => v);
+  const data = readFileSync("input.txt", "utf8").split(/\r?\n/g);
 
   const solution = findSolution(data);
 
@@ -13,7 +11,7 @@ try {
 }
 
 function findSolution(data) {
-  let pointsDrawn = {};
+  let pointsDrawn = [];
 
   for (let index = 0; index < data.length; index++) {
     let [from, to] = data[index].split(" -> ");
@@ -29,11 +27,11 @@ function findSolution(data) {
         yIndex != y2 - -yIterator || xIndex != x2 - -xIterator;
         yIndex -= -yIterator, xIndex -= -xIterator
       ) {
-        pointsDrawn[xIndex] = pointsDrawn[xIndex] || {};
+        pointsDrawn[xIndex] = pointsDrawn[xIndex] || [];
         pointsDrawn[xIndex][yIndex] = (pointsDrawn[xIndex][yIndex] || 0) + 1;
       }
     }
   }
 
-  return Object.values(pointsDrawn).reduce((acc, row) => acc + Object.values(row).filter(point => point > 1).length, 0);
+  return pointsDrawn.reduce((acc, row) => acc + row.filter(point => point > 1).length, 0);
 }

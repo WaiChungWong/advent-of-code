@@ -1,7 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("../input", "utf8").split("\r\n");
+  const data = readFileSync("../input.txt", "utf8").split("\r\n");
 
   const solution = findSolution(data);
 
@@ -40,38 +40,26 @@ function findSolution(data) {
       }
     }
 
-    let index3 = patterns235.findIndex(p =>
-      format[1].split("").reduce((acc, v) => acc && p.indexOf(v) !== -1, true)
-    );
+    let index3 = patterns235.findIndex(p => format[1].split("").reduce((acc, v) => acc && p.indexOf(v) !== -1, true));
     format[3] = patterns235[index3];
     patterns235.splice(index3, 1);
 
-    let index6 = patterns069.findIndex(p =>
-      format[1].split("").reduce((acc, v) => acc || p.indexOf(v) === -1, false)
-    );
+    let index6 = patterns069.findIndex(p => format[1].split("").reduce((acc, v) => acc || p.indexOf(v) === -1, false));
     format[6] = patterns069[index6];
     patterns069.splice(index6, 1);
 
-    let index0 = patterns069.findIndex(p =>
-      format[4].split("").reduce((acc, v) => acc || p.indexOf(v) === -1, false)
-    );
+    let index0 = patterns069.findIndex(p => format[4].split("").reduce((acc, v) => acc || p.indexOf(v) === -1, false));
     format[0] = patterns069[index0];
     patterns069.splice(index0, 1);
 
-    let index5 = patterns235.findIndex(p =>
-      p.split("").reduce((acc, v) => acc && format[6].indexOf(v) !== -1, true)
-    );
+    let index5 = patterns235.findIndex(p => p.split("").reduce((acc, v) => acc && format[6].indexOf(v) !== -1, true));
     format[5] = patterns235[index5];
     patterns235.splice(index5, 1);
 
     format[2] = patterns235[0];
     format[9] = patterns069[0];
 
-    outputSum -= -outputList
-      .map(output =>
-        format.findIndex(f => output.split("").sort().join("") === f)
-      )
-      .join("");
+    outputSum -= -outputList.map(output => format.findIndex(f => output.split("").sort().join("") === f)).join("");
   }
 
   return outputSum;

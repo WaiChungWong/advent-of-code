@@ -1,7 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("../input", "utf8").split("\r\n");
+  const data = readFileSync("../input.txt", "utf8").split("\r\n");
 
   const solution = findSolution(data);
 
@@ -21,12 +21,7 @@ function findSolution(data) {
       const pointBottom = i + 1 < data.length ? data[i + 1][j] : 9;
       const pointRight = j + 1 < data[i].length ? data[i][j + 1] : 9;
 
-      if (
-        point - pointTop < 0 &&
-        point - pointLeft < 0 &&
-        point - pointBottom < 0 &&
-        point - pointRight < 0
-      ) {
+      if (point - pointTop < 0 && point - pointLeft < 0 && point - pointBottom < 0 && point - pointRight < 0) {
         const basinPoints = [{ x: i, y: j }];
         const markedBasinPoints = [];
 
@@ -36,48 +31,32 @@ function findSolution(data) {
           if (
             x - 1 >= 0 &&
             data[x - 1][y] < 9 &&
-            !markedBasinPoints.find(
-              ({ x: mx, y: my }) => mx - x + 1 === 0 && my - y === 0
-            ) &&
-            !basinPoints.find(
-              ({ x: mx, y: my }) => mx - x + 1 === 0 && my - y === 0
-            )
+            !markedBasinPoints.find(({ x: mx, y: my }) => mx - x + 1 === 0 && my - y === 0) &&
+            !basinPoints.find(({ x: mx, y: my }) => mx - x + 1 === 0 && my - y === 0)
           ) {
             basinPoints.push({ x: x - 1, y });
           }
           if (
             y - 1 >= 0 &&
             data[x][y - 1] < 9 &&
-            !markedBasinPoints.find(
-              ({ x: mx, y: my }) => mx - x === 0 && my - y + 1 === 0
-            ) &&
-            !basinPoints.find(
-              ({ x: mx, y: my }) => mx - x === 0 && my - y + 1 === 0
-            )
+            !markedBasinPoints.find(({ x: mx, y: my }) => mx - x === 0 && my - y + 1 === 0) &&
+            !basinPoints.find(({ x: mx, y: my }) => mx - x === 0 && my - y + 1 === 0)
           ) {
             basinPoints.push({ x, y: y - 1 });
           }
           if (
             x + 1 < data.length &&
             data[x + 1][y] < 9 &&
-            !markedBasinPoints.find(
-              ({ x: mx, y: my }) => mx - x - 1 === 0 && my - y === 0
-            ) &&
-            !basinPoints.find(
-              ({ x: mx, y: my }) => mx - x - 1 === 0 && my - y === 0
-            )
+            !markedBasinPoints.find(({ x: mx, y: my }) => mx - x - 1 === 0 && my - y === 0) &&
+            !basinPoints.find(({ x: mx, y: my }) => mx - x - 1 === 0 && my - y === 0)
           ) {
             basinPoints.push({ x: x + 1, y });
           }
           if (
             y + 1 < data[x].length &&
             data[x][y + 1] < 9 &&
-            !markedBasinPoints.find(
-              ({ x: mx, y: my }) => mx - x === 0 && my - y - 1 === 0
-            ) &&
-            !basinPoints.find(
-              ({ x: mx, y: my }) => mx - x === 0 && my - y - 1 === 0
-            )
+            !markedBasinPoints.find(({ x: mx, y: my }) => mx - x === 0 && my - y - 1 === 0) &&
+            !basinPoints.find(({ x: mx, y: my }) => mx - x === 0 && my - y - 1 === 0)
           ) {
             basinPoints.push({ x, y: y + 1 });
           }

@@ -1,7 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("../input", "utf8").split("\r\n");
+  const data = readFileSync("../input.txt", "utf8").split("\r\n");
 
   const solution = findSolution(data);
 
@@ -11,7 +11,7 @@ try {
 }
 
 function findSolution(data) {
-  const existingStates = {};
+  const existingStates = new Map();
   let player1Position;
   let player2Position;
   let player1Score = 0;
@@ -34,8 +34,8 @@ function findSolution(data) {
       return [1, 0];
     } else if (player2Score >= 21) {
       return [0, 1];
-    } else if (existingStates[state]) {
-      return existingStates[state];
+    } else if (existingStates.has(state)) {
+      return existingStates.get(state);
     }
 
     let player1Wins = 0;
@@ -59,9 +59,9 @@ function findSolution(data) {
       }
     }
 
-    existingStates[state] = [player1Wins, player2Wins];
+    existingStates.set(state, [player1Wins, player2Wins]);
 
-    return existingStates[state];
+    return existingStates.get(state);
   };
 
   return countWins(player1Position, player2Position, player1Score, player2Score);

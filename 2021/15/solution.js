@@ -1,9 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("input", "utf8")
-    .split(/\r?\n/g)
-    .filter(v => v);
+  const data = readFileSync("input.txt", "utf8").split(/\r?\n/g);
 
   const solution = findSolution(data);
 
@@ -24,7 +22,6 @@ function findSolution(data) {
   let queue = ["0,0"];
 
   while (queue.length > 0) {
-    console.log(queue);
     let [currentX, currentY] = queue.shift().split(",");
 
     const neighbours = [

@@ -1,7 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("../input", "utf8").split("\r\n");
+  const data = readFileSync("../input.txt", "utf8").split("\r\n");
 
   const solution = findSolution(data);
 
@@ -20,14 +20,14 @@ function findSolution(data) {
 
     switch (command) {
       case "forward":
-        horizontalPosition += unit;
-        depth -= aim * -unit;
+        horizontalPosition += unit - 0;
+        depth += aim * (unit - 0);
         break;
       case "up":
-        aim += -unit;
+        aim -= unit - 0;
         break;
       case "down":
-        aim -= -unit;
+        aim += unit - 0;
         break;
       default:
         break;

@@ -1,9 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("input", "utf8")
-    .split(/\r?\n/g)
-    .filter(v => v);
+  const data = readFileSync("input.txt", "utf8").split(/\r?\n/g);
 
   const solution = findSolution(data);
 
@@ -13,7 +11,7 @@ try {
 }
 
 function findSolution(data) {
-  const cubes = {};
+  const cubes = new Map();
 
   for (let index = 0; index < data.length; index++) {
     const [switcher, coordinates] = data[index].split(" ");
@@ -26,14 +24,14 @@ function findSolution(data) {
       for (let j = Math.max(-50, yStart); j <= Math.min(50, yEnd); j++) {
         for (let k = Math.max(-50, zStart); k <= Math.min(50, zEnd); k++) {
           if (switcher === "on") {
-            cubes[`${i},${j},${k}`] = true;
+            cubes.set(`${i},${j},${k}`, true);
           } else if (switcher === "off") {
-            delete cubes[`${i},${j},${k}`];
+            cubes.delete(`${i},${j},${k}`);
           }
         }
       }
     }
   }
 
-  return Object.keys(cubes).length;
+  return cubes.size;
 }

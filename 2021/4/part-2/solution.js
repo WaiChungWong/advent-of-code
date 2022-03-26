@@ -1,7 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("../input", "utf8").split("\r\n");
+  const data = readFileSync("../input.txt", "utf8").split("\r\n");
 
   const solution = findSolution(data);
 
@@ -49,37 +49,22 @@ function findSolution(data) {
 
       for (let rowIndex = 0; rowIndex < board.length; rowIndex++) {
         for (let colIndex = 0; colIndex < board[0].length; colIndex++) {
-          board[rowIndex][colIndex] =
-            board[rowIndex][colIndex] == drawNumber
-              ? NaN
-              : board[rowIndex][colIndex];
+          board[rowIndex][colIndex] = board[rowIndex][colIndex] == drawNumber ? NaN : board[rowIndex][colIndex];
         }
       }
 
       let isBingo = false;
 
-      isBingo =
-        isBingo ||
-        board.reduce(
-          (acc, row) =>
-            acc || row.reduce((acc, num) => acc && isNaN(num), true),
-          false
-        );
+      isBingo = isBingo || board.reduce((acc, row) => acc || row.reduce((acc, num) => acc && isNaN(num), true), false);
       for (let colIndex = 0; colIndex < board.length; colIndex++) {
-        isBingo =
-          isBingo ||
-          board.reduce((acc, row) => acc && isNaN(row[colIndex]), true);
+        isBingo = isBingo || board.reduce((acc, row) => acc && isNaN(row[colIndex]), true);
       }
 
       if (isBingo) {
         boardsBingoed[boardIndex] = true;
 
-        if (boardsBingoed.filter((bingoed) => !bingoed).length === 0) {
-          let sum = board.reduce(
-            (acc, row) =>
-              acc - -row.reduce((acc, num) => acc - -(isNaN(num) ? 0 : num), 0),
-            0
-          );
+        if (boardsBingoed.filter(bingoed => !bingoed).length === 0) {
+          let sum = board.reduce((acc, row) => acc - -row.reduce((acc, num) => acc - -(isNaN(num) ? 0 : num), 0), 0);
 
           return sum * drawNumber;
         }

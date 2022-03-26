@@ -1,9 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("input", "utf8")
-    .split(/\r?\n/g)
-    .filter(v => v);
+  const data = readFileSync("input.txt", "utf8").split(/\r?\n/g);
 
   const solution = findSolution(data);
 
@@ -20,7 +18,7 @@ function findSolution(data) {
     operations.push({ operator, a, b });
   }
 
-  const existingStates = {};
+  const existingStates = new Map();
 
   const findMax = function (opIndex, w, x, y, z) {
     const state = `${opIndex},${z}`;
@@ -30,16 +28,16 @@ function findSolution(data) {
     }
 
     if (opIndex >= operations.length) {
-      existingStates[state] = { valid: z === 0, inputs: "" };
-      return existingStates[state];
+      existingStates.set(state, { valid: z === 0, inputs: "" });
+      return existingStates.get(state);
     }
 
     const registers = { w, x, y, z };
     const { operator, a, b } = operations[opIndex];
 
     if (operator === "inp") {
-      if (existingStates[state]) {
-        return existingStates[state];
+      if (existingStates.has(state)) {
+        return existingStates.get(state);
       }
 
       for (let input = 9; input > 0; input--) {
@@ -48,15 +46,13 @@ function findSolution(data) {
         const { valid, inputs } = findMax(opIndex + 1, registers.w, registers.x, registers.y, registers.z);
 
         if (valid) {
-          existingStates[state] = { valid: true, inputs: `${input}${inputs}` };
-
-          return existingStates[state];
+          existingStates.set(state, { valid: true, inputs: `${input}${inputs}` });
+          return existingStates.get(state);
         }
       }
 
-      existingStates[state] = { valid: false, inputs: "" };
-
-      return existingStates[state];
+      existingStates.set(state, { valid: false, inputs: "" });
+      return existingStates.get(state);
     }
 
     const bValue = registers[b] === undefined ? parseInt(b, 10) : registers[b];

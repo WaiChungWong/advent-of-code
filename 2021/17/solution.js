@@ -1,9 +1,7 @@
 const { readFileSync } = require("fs");
 
 try {
-  const data = readFileSync("input", "utf8")
-    .split(/\r?\n/g)
-    .filter(v => v);
+  const data = readFileSync("input.txt", "utf8").split(/\r?\n/g);
 
   const solution = findSolution(data);
 
@@ -13,8 +11,8 @@ try {
 }
 
 function findSolution(data) {
-  const [_, yRange] = data[0].replace(/target area: |x=|y=/g, "").split(", ");
-  const [minY, _] = yRange.split("..");
+  const [_xRange, yRange] = data[0].replace(/target area: |x=|y=/g, "").split(", ");
+  const [minY, _maxY] = yRange.split("..");
 
   const n = -minY - 1;
 
